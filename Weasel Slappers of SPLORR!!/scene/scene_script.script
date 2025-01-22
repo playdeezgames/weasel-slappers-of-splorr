@@ -1,0 +1,43 @@
+local avatar = require "world.avatar"
+local character = require "world.character"
+local room_cell = require "world.room_cell"
+local room      = require "world.room"
+local room_cell_type = require "world.room_cell_type"
+local grimoire       = require "game.grimoire"
+local character_type = require "world.character_type"
+
+require "world.initializers.initializers"
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+end
+
+function update(self, dt)
+	local avatar_character_id = avatar.get_character()
+	local avatar_room_cell_id = character.get_room_cell(avatar_character_id)
+	local avatar_room_id = room_cell.get_room(avatar_room_cell_id)
+	local room_columns, room_rows = room.get_columns(avatar_room_id), room.get_rows(avatar_room_id)
+	for column = 1, room_columns do
+		for row = 1, room_rows do
+			local room_cell_id = room.get_room_cell(avatar_room_id, column, row)
+			local room_cell_type_id = room_cell.get_room_cell_type(room_cell_id)
+			local tile = room_cell_type.get_tile(room_cell_type_id)
+			tilemap.set_tile(grimoire.URL_SCENE_TILEMAP, grimoire.LAYER_ROOM_CELL, column, row, tile)
+
+			tile = 0
+			local character_id = room_cell.get_character(room_cell_id)
+			if character_id ~= nil then
+				local character_type_id = character.get_character_type(character_id)
+				tile = character_type.get_tile(character_type_id)
+			end
+			tilemap.set_tile(grimoire.URL_SCENE_TILEMAP, grimoire.LAYER_CHARACTER, column, row, tile)
+		end
+	end
+end
+
+function on_message(self, message_id, message, sender)
+end
+
+function on_input(self, action_id, action)
+	print(action_id)
+end

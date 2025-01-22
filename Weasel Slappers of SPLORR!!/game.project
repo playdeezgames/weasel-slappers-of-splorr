@@ -1,0 +1,29 @@
+[bootstrap]
+main_collection = /main/main.collectionc
+
+[script]
+shared_state = 1
+
+[display]
+width = 1280
+height = 720
+high_dpi = 1
+
+[android]
+input_method = HiddenInputField
+
+[html5]
+scale_mode = fit
+htmlfile = /builtins/manifests/web/engine_template.html
+cssfile = /builtins/manifests/web/dark_theme.css
+show_fullscreen_button = 0
+show_made_with_defold = 0
+show_console_banner = 0
+
+[project]
+title = Weasel Slappers of SPLORR!!
+
+[graphics]
+default_texture_min_filter = nearest
+default_texture_mag_filter = nearest
+
