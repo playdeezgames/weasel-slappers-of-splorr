@@ -28,15 +28,25 @@ function M.create(room_type_id, columns, rows)
     return room_id
 end
 function M.get_room_type(room_id)
+    assert(type(room_id) == "number", "room_id should be a number")
     return get_room_data(room_id).room_type_id
 end
 function M.get_columns(room_id)
+    assert(type(room_id) == "number", "room_id should be a number")
     return get_room_data(room_id).columns
 end
 function M.get_rows(room_id)
+    assert(type(room_id) == "number", "room_id should be a number")
     return get_room_data(room_id).rows
 end
 function M.get_room_cell(room_id, column, row)
-    return get_room_data(room_id).cells[column][row]
+    assert(type(room_id) == "number", "room_id should be a number")
+    assert(type(column) == "number", "column should be a number")
+    assert(type(row) == "number", "row should be a number")
+    local room_column = get_room_data(room_id).cells[column]
+    if room_column == nil then
+        return nil
+    end
+    return room_column[row]
 end
 return M
