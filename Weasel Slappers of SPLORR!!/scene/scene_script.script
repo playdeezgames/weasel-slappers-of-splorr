@@ -5,6 +5,7 @@ local room      = require "world.room"
 local room_cell_type = require "world.room_cell_type"
 local grimoire       = require "game.grimoire"
 local character_type = require "world.character_type"
+local verb_type      = require "world.verb_type"
 
 require "world.initializers.initializers"
 
@@ -38,6 +39,23 @@ end
 function on_message(self, message_id, message, sender)
 end
 
+local function move_avatar(direction_id)
+	local character_id = avatar.get_character()
+	character.do_verb(character_id, verb_type.MOVE, { direction_id = direction_id})
+end
+
 function on_input(self, action_id, action)
-	print(action_id)
+	if action.pressed or action.repeated then
+		if action_id == hash(grimoire.ACTION_UP) then
+			move_avatar(grimoire.DIRECTION_UP)
+		elseif action_id == hash(grimoire.ACTION_RIGHT) then
+			move_avatar(grimoire.DIRECTION_RIGHT)
+		elseif action_id == hash(grimoire.ACTION_DOWN) then
+			move_avatar(grimoire.DIRECTION_DOWN)
+		elseif action_id == hash(grimoire.ACTION_LEFT) then
+			move_avatar(grimoire.DIRECTION_LEFT)
+		else
+			print(action_id)
+		end
+	end
 end

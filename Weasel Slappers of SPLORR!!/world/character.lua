@@ -62,4 +62,14 @@ function M.get_statistic(character_id, statistic_type_id)
     end
     return character_data.statistics[statistic_type_id]
 end
+function M.do_verb(character_id, verb_type_id, context)
+    assert(type(character_id)=="number", "character_id must be a number.")
+    assert(type(verb_type_id)=="string", "verb_type_id must be a string.")
+    assert(type(context)=="nil" or type(context)=="table", "context must be a table or nil.")
+    local character_type_id = M.get_character_type(character_id)
+    local verb_doer = character_type.get_verb_doer(character_type_id)
+    if verb_doer ~= nil then
+        verb_doer(character_id, verb_type_id, context)
+    end
+end
 return M
