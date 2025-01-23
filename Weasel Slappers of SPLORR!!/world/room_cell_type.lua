@@ -1,8 +1,9 @@
+local grimoire = require "game.grimoire"
 local M = {}
 M.GRASS = "GRASS"
 local data = {
     [M.GRASS] = {
-        tile = 1
+        tile = grimoire.TILE_GRASS
     }
 }
 local function get_descriptor(room_cell_type_id)
