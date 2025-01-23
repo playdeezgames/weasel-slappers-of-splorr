@@ -6,9 +6,10 @@ interaction_type.set_dialog_generator(
         return {
             lines = {"Yer in an encounter."},
             choices = {
-                {text="FIGHT!"},
-                {text="RUN!"}
-            }
+                {text="FIGHT!", interaction = {interaction_type_id=interaction_type.FIGHT, context = context}},
+                {text="RUN!", interaction = {}}
+            },
+            cancel = {}
         }
     end )
 return nil

@@ -93,4 +93,7 @@ end
 function M.has_interaction(character_id)
     return M.get_interaction(character_id) ~= nil
 end
+function M.recycle(character_id)
+    world.data.characters[character_id] = {}
+end
 return M

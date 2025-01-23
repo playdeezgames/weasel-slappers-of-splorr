@@ -15,7 +15,9 @@
         "redefined-local"
     ],
     "Lua.workspace.library": [
-        "~\\AppData\\Roaming\\Code\\User\\globalStorage\\astronachos.defold"
+        "~\\AppData\\Roaming\\Code\\User\\globalStorage\\astronachos.defold",
+        "~/.config/Code/User/globalStorage/astronachos.defold",
+        "~/.config/Code/User/workspaceStorage/7f1bc7c7bd29ce653863a814027a5017/astronachos.defold"
     ],
     "files.associations": {
         "*.project": "ini",
