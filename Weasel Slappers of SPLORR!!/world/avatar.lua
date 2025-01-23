@@ -1,5 +1,6 @@
 local world = require "world.world"
 local character = require "world.character"
+local interaction_type = require "world.interaction_type"
 local M = {}
 world.data.avatar = {}
 local function get_avatar_data()
@@ -13,7 +14,17 @@ function M.set_character(character_id)
     get_avatar_data().character_id = character_id
 end
 function M.get_dialog()
-    return get_avatar_data().dialog
+    local dialog = get_avatar_data().dialog
+    if dialog == nil then
+        local character_id = M.get_character()
+        local interaction = character.get_interaction(character_id)
+        if interaction ~= nil then
+            dialog = interaction_type.generate_dialog(interaction.interaction_type_id, interaction.context)
+			M.set_dialog(dialog)
+			M.set_dialog_choice(1)
+        end
+    end
+    return dialog
 end
 function M.set_dialog(dialog)
     assert(type(dialog)=="table" or type(dialog)=="nil", "dialog must be a table or nil.")
@@ -63,7 +74,9 @@ function M.cancel_dialog_choice()
 		return
 	end
 	local character_id = M.get_character()
-	character.set_interaction(character_id, dialog.cancel.interaction_type_id, dialog.cancel.context)
-	M.set_dialog(nil)
+	if dialog.cancel ~= nil then
+		character.set_interaction(character_id, dialog.cancel.interaction_type_id, dialog.cancel.context)
+		M.set_dialog(nil)
+	end
 end
 return M

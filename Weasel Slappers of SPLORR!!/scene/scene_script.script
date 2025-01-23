@@ -42,14 +42,10 @@ local function update_interactor()
 	local avatar_character_id = avatar.get_character()
 	local interaction = character.get_interaction(avatar_character_id)
 	if interaction == nil then
-		label.set_text(grimoire.URL_INTERACTOR_TEXT, "-")
+		label.set_text(grimoire.URL_INTERACTOR_TEXT, "")
 	else
 		local dialog = avatar.get_dialog()
-		if dialog == nil then
-			dialog = interaction_type.get_dialog(interaction.interaction_type_id, interaction.context)
-			avatar.set_dialog(dialog)
-			avatar.set_dialog_choice(1)
-		end
+		assert(dialog ~= nil, "dialog should not be nil")
 		local text = ""
 		for _, line in ipairs(dialog.lines) do
 			text = text .. line .. "\n"
@@ -57,9 +53,13 @@ local function update_interactor()
 		text = text .. "---\n"
 		for choice_index, choice in ipairs(dialog.choices) do
 			if choice_index == avatar.get_dialog_choice() then
-				text = text .. ">"
+				text = text .. "["
 			end
-			text = text .. choice.text .. "\n"
+			text = text .. choice.text
+			if choice_index == avatar.get_dialog_choice() then
+				text = text .. "]"
+			end
+			text = text .. "\n"
 		end
 		label.set_text(grimoire.URL_INTERACTOR_TEXT, text)
 	end

@@ -5,7 +5,7 @@ local data = {
     [M.ENCOUNTER] = {},
     [M.FIGHT] = {}
 }
-function M.get_dialog(interation_type_id, context)
+function M.generate_dialog(interation_type_id, context)
     assert(type(interation_type_id)=="string", "interation_type_id should be a string")
     assert(type(context)=="table", "context should be a table")
     local dialog_generator = M.get_dialog_generator(interation_type_id)
