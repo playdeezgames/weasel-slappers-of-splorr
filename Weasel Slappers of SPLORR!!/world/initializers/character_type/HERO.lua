@@ -9,7 +9,6 @@ local interaction_type = require "world.interaction_type"
 character_type.set_initializer(
     character_type.HERO,
     function(character_id)
-        character.set_interaction(character_id, interaction_type.INTRO, {})
     end)
 local function do_move(character_id, direction_id)
     local room_cell_id = character.get_room_cell(character_id)

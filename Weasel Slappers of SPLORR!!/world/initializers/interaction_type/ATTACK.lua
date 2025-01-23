@@ -3,7 +3,7 @@ local character = require "world.character"
 local room_cell = require "world.room_cell"
 
 interaction_type.set_dialog_generator(
-    interaction_type.FIGHT, 
+    interaction_type.ATTACK, 
     function(context) 
         local character_id = context.other_character_id
         local room_cell_id = character.get_room_cell(character_id)

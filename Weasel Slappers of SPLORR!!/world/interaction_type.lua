@@ -1,10 +1,10 @@
 local M = {}
 M.ENCOUNTER = "ENCOUNTER"
-M.FIGHT = "FIGHT"
+M.ATTACK = "ATTACK"
 M.INTRO = "INTRO"
 local data = {
     [M.ENCOUNTER] = {},
-    [M.FIGHT] = {},
+    [M.ATTACK] = {},
     [M.INTRO] = {}
 }
 function M.generate_dialog(interation_type_id, context)
