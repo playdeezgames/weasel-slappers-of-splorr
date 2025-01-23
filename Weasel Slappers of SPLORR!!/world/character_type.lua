@@ -26,7 +26,7 @@ function M.get_initializer(character_type_id)
 end
 function M.set_initializer(character_type_id, initializer)
     assert(type(character_type_id) == "string", "character_type_id should be a string")
-    assert(type(initializer) == "string", "initializer should be a function")
+    assert(type(initializer) == "function", "initializer should be a function")
     local old_initializer = M.get_initializer(character_type_id)
     get_descriptor(character_type_id).initializer = initializer
     return old_initializer
