@@ -3,6 +3,7 @@ M.BOARD_COLUMNS = 20
 M.BOARD_ROWS = 20
 
 M.URL_SCENE_TILEMAP = "/scene#scene"
+M.URL_INTERACTOR_TEXT = "/interactor#output"
 
 M.LAYER_ROOM_CELL = "room_cell"
 M.LAYER_CHARACTER = "character"

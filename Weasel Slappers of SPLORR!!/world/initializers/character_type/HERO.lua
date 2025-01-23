@@ -4,6 +4,7 @@ local direction = require "game.direction"
 local character = require "world.character"
 local room_cell = require "world.room_cell"
 local room      = require "world.room"
+local interaction_type = require "world.interaction_type"
 
 character_type.set_initializer(
     character_type.HERO, 
@@ -19,7 +20,7 @@ local function do_move(character_id, direction_id)
     end
     local other_character_id = room_cell.get_character(next_room_cell_id)
     if other_character_id ~= nil then
-        --TODO: other character collision
+        character.set_interaction(character_id, interaction_type.ENCOUNTER, {other_character_id = other_character_id})
         return
     end
     character.set_room_cell(character_id, next_room_cell_id)

@@ -10,4 +10,11 @@ instances {
     y: 3.0
   }
 }
+instances {
+  id: "interactor"
+  prototype: "/interactor/interactor.go"
+  position {
+    y: 720.0
+  }
+}
 scale_along_z: 0

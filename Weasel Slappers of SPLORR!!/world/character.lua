@@ -72,4 +72,25 @@ function M.do_verb(character_id, verb_type_id, context)
         verb_doer(character_id, verb_type_id, context)
     end
 end
+function M.set_interaction(character_id, interaction_type_id, context)
+    assert(type(character_id)=="number", "character_id must be a number.")
+    assert(type(interaction_type_id)=="string" or type(interaction_type_id)=="nil", "interaction_type_id must be a string or nil.")
+    assert(type(context)=="table" or type(context)=="nil", "context must be a string or nil.")
+    local character_data = get_character_data(character_id)
+    if interaction_type_id == nil then
+        character_data.interaction = nil
+    else
+        character_data.interaction = {
+            interaction_type_id = interaction_type_id,
+            context = context
+        }
+    end
+end
+function M.get_interaction(character_id)
+    assert(type(character_id)=="number", "character_id must be a number.")
+    return get_character_data(character_id).interaction
+end
+function M.has_interaction(character_id)
+    return M.get_interaction(character_id) ~= nil
+end
 return M

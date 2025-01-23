@@ -14,7 +14,7 @@ function init(self)
 	msg.post(".", "acquire_input_focus")
 end
 
-function update(self, dt)
+local function update_board()
 	local avatar_character_id = avatar.get_character()
 	local avatar_room_cell_id = character.get_room_cell(avatar_character_id)
 	local avatar_room_id = room_cell.get_room(avatar_room_cell_id)
@@ -37,24 +37,61 @@ function update(self, dt)
 	end
 end
 
+local function update_interactor()
+	local avatar_character_id = avatar.get_character()
+	local interaction = character.get_interaction(avatar_character_id)
+	if interaction == nil then
+		label.set_text(grimoire.URL_INTERACTOR_TEXT, "-")
+	else
+		label.set_text(grimoire.URL_INTERACTOR_TEXT, interaction.interaction_type_id)
+	end
+end
+
+function update(self, dt)
+	update_board()
+	update_interactor()
+end
+
 function on_message(self, message_id, message, sender)
 end
 
 local function move_avatar(direction_id)
 	local character_id = avatar.get_character()
-	character.do_verb(character_id, verb_type.MOVE, { direction_id = direction_id})
+	if not character.has_interaction(character_id) then
+		character.do_verb(character_id, verb_type.MOVE, { direction_id = direction_id})
+	end
+end
+
+local function previous_dialog_choice()
+end
+
+local function next_dialog_choice()
+end
+
+local function confirm_dialog_choice()
+end
+
+local function cancel_dialog_choice()
+	local character_id = avatar.get_character()
+	character.set_interaction(character_id)
 end
 
 function on_input(self, action_id, action)
 	if action.pressed or action.repeated then
 		if action_id == hash(grimoire.ACTION_UP) then
+			previous_dialog_choice()
 			move_avatar(direction.UP)
 		elseif action_id == hash(grimoire.ACTION_RIGHT) then
 			move_avatar(direction.RIGHT)
 		elseif action_id == hash(grimoire.ACTION_DOWN) then
+			next_dialog_choice()
 			move_avatar(direction.DOWN)
 		elseif action_id == hash(grimoire.ACTION_LEFT) then
 			move_avatar(direction.LEFT)
+		elseif action_id == hash(grimoire.ACTION_GREEN) then
+			confirm_dialog_choice()
+		elseif action_id == hash(grimoire.ACTION_RED) then
+			cancel_dialog_choice()
 		else
 			print(action_id)
 		end
