@@ -7,6 +7,7 @@ local grimoire       = require "game.grimoire"
 local character_type = require "world.character_type"
 local verb_type      = require "world.verb_type"
 local direction = require "game.direction"
+local interaction_type = require "world.interaction_type"
 
 require "world.initializers.initializers"
 
@@ -37,13 +38,33 @@ local function update_board()
 	end
 end
 
+local dialog_choice = 1
+local dialog = nil
+
 local function update_interactor()
 	local avatar_character_id = avatar.get_character()
 	local interaction = character.get_interaction(avatar_character_id)
 	if interaction == nil then
 		label.set_text(grimoire.URL_INTERACTOR_TEXT, "-")
 	else
-		label.set_text(grimoire.URL_INTERACTOR_TEXT, interaction.interaction_type_id)
+		if dialog == nil then
+			dialog = interaction_type.get_dialog(interaction.interaction_type_id, interaction.context)
+		end
+		local text = ""
+		for _, line in ipairs(dialog.lines) do
+			text = text .. line .. "\n"
+		end
+		text = text .. "---\n"
+		if dialog_choice > #dialog.choices then
+			dialog_choice = 1
+		end
+		for choice_index, choice in ipairs(dialog.choices) do
+			if choice_index == dialog_choice then
+				text = text .. ">"
+			end
+			text = text .. choice.text .. "\n"
+		end
+		label.set_text(grimoire.URL_INTERACTOR_TEXT, text)
 	end
 end
 
@@ -63,17 +84,40 @@ local function move_avatar(direction_id)
 end
 
 local function previous_dialog_choice()
+	if dialog == nil then
+		return
+	end
+	if dialog_choice == 1 then
+		dialog_choice = #dialog.choices
+	else
+		dialog_choice = dialog_choice - 1
+	end
 end
 
 local function next_dialog_choice()
+	if dialog == nil then
+		return
+	end
+	if dialog_choice == #dialog.choices then
+		dialog_choice = 1
+	else
+		dialog_choice = dialog_choice + 1
+	end
 end
 
 local function confirm_dialog_choice()
+	if dialog == nil then
+		return
+	end
 end
 
 local function cancel_dialog_choice()
+	if dialog == nil then
+		return
+	end
 	local character_id = avatar.get_character()
 	character.set_interaction(character_id)
+	dialog = nil
 end
 
 function on_input(self, action_id, action)
