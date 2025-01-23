@@ -7,8 +7,9 @@ local room      = require "world.room"
 local interaction_type = require "world.interaction_type"
 
 character_type.set_initializer(
-    character_type.HERO, 
-    function(character_id) 
+    character_type.HERO,
+    function(character_id)
+        character.set_interaction(character_id, interaction_type.INTRO, {})
     end)
 local function do_move(character_id, direction_id)
     local room_cell_id = character.get_room_cell(character_id)
@@ -26,7 +27,7 @@ local function do_move(character_id, direction_id)
     character.set_room_cell(character_id, next_room_cell_id)
 end
 character_type.set_verb_doer(
-    character_type.HERO, 
+    character_type.HERO,
     function(character_id, verb_type_id, context)
         if verb_type_id == verb_type.MOVE then
             do_move(character_id, context.direction_id)

@@ -1,9 +1,11 @@
 local M = {}
 M.ENCOUNTER = "ENCOUNTER"
 M.FIGHT = "FIGHT"
+M.INTRO = "INTRO"
 local data = {
     [M.ENCOUNTER] = {},
-    [M.FIGHT] = {}
+    [M.FIGHT] = {},
+    [M.INTRO] = {}
 }
 function M.generate_dialog(interation_type_id, context)
     assert(type(interation_type_id)=="string", "interation_type_id should be a string")
