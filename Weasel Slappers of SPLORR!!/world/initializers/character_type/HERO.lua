@@ -6,6 +6,7 @@ local room_cell = require "world.room_cell"
 local room      = require "world.room"
 local interaction_type = require "world.interaction_type"
 local room_cell_type   = require "world.room_cell_type"
+local avatar = require "world.avatar"
 
 character_type.set_initializer(
     character_type.HERO,
@@ -40,7 +41,7 @@ local function do_move(character_id, direction_id)
     end
     local other_character_id = room_cell.get_character(next_room_cell_id)
     if other_character_id ~= nil then
-        character.set_interaction(character_id, interaction_type.ENCOUNTER, {other_character_id = other_character_id})
+        avatar.set_interaction(interaction_type.ENCOUNTER, {other_character_id = other_character_id})
         return
     end
     character.set_room_cell(character_id, next_room_cell_id)

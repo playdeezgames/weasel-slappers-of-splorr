@@ -17,7 +17,7 @@ end
 
 local function update_board()
 	local avatar_character_id = avatar.get_character()
-	local is_interacting = character.get_interaction(avatar_character_id) ~= nil
+	local is_interacting = avatar.get_interaction() ~= nil
 	local avatar_room_cell_id = character.get_room_cell(avatar_character_id)
 	local avatar_room_id = room_cell.get_room(avatar_room_cell_id)
 	local room_columns, room_rows = room.get_columns(avatar_room_id), room.get_rows(avatar_room_id)
@@ -47,7 +47,7 @@ end
 
 local function update_interactor()
 	local avatar_character_id = avatar.get_character()
-	local interaction = character.get_interaction(avatar_character_id)
+	local interaction = avatar.get_interaction()
 	if interaction == nil then
 		label.set_text(grimoire.URL_INTERACTOR_TEXT, "Up/Right/Left/Down: Move")
 	else
@@ -83,7 +83,7 @@ end
 
 local function move_avatar(direction_id)
 	local character_id = avatar.get_character()
-	if not character.has_interaction(character_id) then
+	if not avatar.has_interaction() then
 		character.do_verb(character_id, verb_type.MOVE, { direction_id = direction_id})
 	end
 end

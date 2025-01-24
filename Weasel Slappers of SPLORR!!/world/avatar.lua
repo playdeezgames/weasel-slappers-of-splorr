@@ -1,5 +1,4 @@
 local world = require "world.world"
-local character = require "world.character"
 local interaction_type = require "world.interaction_type"
 local M = {}
 world.data.avatar = {}
@@ -17,7 +16,7 @@ function M.get_dialog()
     local dialog = get_avatar_data().dialog
     if dialog == nil then
         local character_id = M.get_character()
-        local interaction = character.get_interaction(character_id)
+        local interaction = M.get_interaction()
         if interaction ~= nil then
             dialog = interaction_type.generate_dialog(interaction.interaction_type_id, interaction.context)
 			M.set_dialog(dialog)
@@ -65,7 +64,7 @@ function M.confirm_dialog_choice()
 	end
 	local character_id = M.get_character()
 	local choice = dialog.choices[M.get_dialog_choice()]
-	character.set_interaction(character_id, choice.interaction.interaction_type_id, choice.interaction.context)
+	M.set_interaction(choice.interaction.interaction_type_id, choice.interaction.context)
 	M.set_dialog(nil)
 end
 function M.cancel_dialog_choice()
@@ -75,8 +74,27 @@ function M.cancel_dialog_choice()
 	end
 	local character_id = M.get_character()
 	if dialog.cancel ~= nil then
-		character.set_interaction(character_id, dialog.cancel.interaction_type_id, dialog.cancel.context)
+		M.set_interaction(dialog.cancel.interaction_type_id, dialog.cancel.context)
 		M.set_dialog(nil)
 	end
+end
+function M.set_interaction(interaction_type_id, context)
+    assert(type(interaction_type_id)=="string" or type(interaction_type_id)=="nil", "interaction_type_id must be a string or nil.")
+    assert(type(context)=="table" or type(context)=="nil", "context must be a table or nil.")
+    local avatar_data = get_avatar_data()
+    if interaction_type_id == nil then
+        avatar_data.interaction = nil
+    else
+        avatar_data.interaction = {
+            interaction_type_id = interaction_type_id,
+            context = context
+        }
+    end
+end
+function M.get_interaction()
+    return get_avatar_data().interaction
+end
+function M.has_interaction()
+    return M.get_interaction() ~= nil
 end
 return M
