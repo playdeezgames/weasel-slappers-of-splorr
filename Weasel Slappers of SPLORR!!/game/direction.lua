@@ -29,4 +29,10 @@ function M.get_delta_y(direction_id)
     assert(type(direction_id)=="string", "direction_id should be a string")
     return data[direction_id].delta_y
 end
+function M.get_all()
+    return {M.UP, M.RIGHT, M.DOWN, M.LEFT}
+end
+function M.step(direction_id, column, row)
+    return column + M.get_delta_x(direction_id), row + M.get_delta_y(direction_id)
+end
 return M

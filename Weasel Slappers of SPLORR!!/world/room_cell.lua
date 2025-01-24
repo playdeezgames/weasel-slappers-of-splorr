@@ -37,4 +37,7 @@ end
 function M.set_character(room_cell_id, character_id)
     get_room_cell_data(room_cell_id).character_id = character_id
 end
+function M.has_character(room_cell_id)
+    return get_room_cell_data(room_cell_id).character_id ~= nil
+end
 return M

@@ -10,5 +10,7 @@ local room_cell_id = room.get_room_cell(room_id, math.floor(grimoire.BOARD_COLUM
 local avatar_character_id = character.create(character_type.HERO, room_cell_id)
 avatar.set_character(avatar_character_id)
 
-room_cell_id = room.get_room_cell(room_id, grimoire.BOARD_COLUMNS - 1, grimoire.BOARD_ROWS - 1)
-local weasel_character_id = character.create(character_type.WEASEL, room_cell_id)
+character.create(character_type.WEASEL, room.get_room_cell(room_id, grimoire.BOARD_COLUMNS - 1, grimoire.BOARD_ROWS - 1))
+character.create(character_type.WEASEL, room.get_room_cell(room_id, 2, grimoire.BOARD_ROWS - 1))
+character.create(character_type.WEASEL, room.get_room_cell(room_id, grimoire.BOARD_COLUMNS - 1, 2))
+character.create(character_type.WEASEL, room.get_room_cell(room_id, 2, 2))
