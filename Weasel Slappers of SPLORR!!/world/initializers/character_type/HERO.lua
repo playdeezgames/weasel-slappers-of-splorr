@@ -10,6 +10,17 @@ character_type.set_initializer(
     character_type.HERO,
     function(character_id)
     end)
+local function move_other_characters(character_id, room_id)
+    for column = 1, room.get_columns(room_id) do
+        for row = 1, room.get_rows(room_id) do
+            local room_cell_id = room.get_room_cell(room_id, column, row)
+            local other_character_id = room_cell.get_character(room_cell_id)
+            if other_character_id ~= nil and other_character_id ~= character_id then
+                character.do_verb(other_character_id, verb_type.STEP, {})
+            end
+        end
+    end
+end
 local function do_move(character_id, direction_id)
     local room_cell_id = character.get_room_cell(character_id)
     local room_id = room_cell.get_room(room_cell_id)
@@ -24,6 +35,7 @@ local function do_move(character_id, direction_id)
         return
     end
     character.set_room_cell(character_id, next_room_cell_id)
+    move_other_characters(character_id, room_id)
 end
 character_type.set_verb_doer(
     character_type.HERO,
