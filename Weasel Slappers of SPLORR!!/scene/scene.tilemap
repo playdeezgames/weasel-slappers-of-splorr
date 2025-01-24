@@ -107,4 +107,8 @@ layers {
   id: "character"
   z: 0.5
 }
+layers {
+  id: "effect"
+  z: 0.9
+}
 material: "/builtins/materials/tile_map.material"

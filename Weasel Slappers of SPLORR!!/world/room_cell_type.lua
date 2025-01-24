@@ -1,9 +1,15 @@
 local grimoire = require "game.grimoire"
 local M = {}
 M.GRASS = "GRASS"
+M.STUMP = "STUMP"
 local data = {
     [M.GRASS] = {
-        tile = grimoire.TILE_GRASS
+        tile = grimoire.TILE_GRASS,
+        blocking = false
+    },
+    [M.STUMP] = {
+        tile = grimoire.TILE_STUMP,
+        blocking = true
     }
 }
 local function get_descriptor(room_cell_type_id)
@@ -27,5 +33,9 @@ function M.set_initializer(room_cell_type_id, initializer)
     local old_initializer = M.get_initializer(room_cell_type_id)
     get_descriptor(room_cell_type_id).initializer = initializer
     return old_initializer
+end
+function M.get_blocking(room_cell_type_id)
+    assert(type(room_cell_type_id) == "string", "room_cell_type_id should be a string")
+    return get_descriptor(room_cell_type_id).blocking
 end
 return M

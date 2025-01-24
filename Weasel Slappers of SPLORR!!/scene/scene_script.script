@@ -17,6 +17,7 @@ end
 
 local function update_board()
 	local avatar_character_id = avatar.get_character()
+	local is_interacting = character.get_interaction(avatar_character_id) ~= nil
 	local avatar_room_cell_id = character.get_room_cell(avatar_character_id)
 	local avatar_room_id = room_cell.get_room(avatar_room_cell_id)
 	local room_columns, room_rows = room.get_columns(avatar_room_id), room.get_rows(avatar_room_id)
@@ -34,6 +35,12 @@ local function update_board()
 				tile = character_type.get_tile(character_type_id)
 			end
 			tilemap.set_tile(grimoire.URL_SCENE_TILEMAP, grimoire.LAYER_CHARACTER, column, row, tile)
+
+			tile = 0
+			if is_interacting then
+				tile = grimoire.TILE_DITHER
+			end
+			tilemap.set_tile(grimoire.URL_SCENE_TILEMAP, grimoire.LAYER_EFFECT, column, row, tile)
 		end
 	end
 end

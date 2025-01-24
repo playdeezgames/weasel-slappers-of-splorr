@@ -5,6 +5,7 @@ local character = require "world.character"
 local room_cell = require "world.room_cell"
 local room      = require "world.room"
 local interaction_type = require "world.interaction_type"
+local room_cell_type   = require "world.room_cell_type"
 
 character_type.set_initializer(
     character_type.HERO,
@@ -31,6 +32,10 @@ local function do_move(character_id, direction_id)
     local next_column, next_row = room_cell.get_column(room_cell_id) + direction.get_delta_x(direction_id), room_cell.get_row(room_cell_id) + direction.get_delta_y(direction_id)
     local next_room_cell_id = room.get_room_cell(room_id, next_column, next_row)
     if next_room_cell_id == nil then
+        return
+    end
+    local next_room_cell_type_id = room_cell.get_room_cell_type(next_room_cell_id)
+    if room_cell_type.get_blocking(next_room_cell_type_id) then
         return
     end
     local other_character_id = room_cell.get_character(next_room_cell_id)

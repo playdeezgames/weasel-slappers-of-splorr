@@ -22,6 +22,9 @@ end
 function M.get_room_cell_type(room_cell_id)
     return get_room_cell_data(room_cell_id).room_cell_type_id
 end
+function M.set_room_cell_type(room_cell_id, room_cell_type_id)
+    get_room_cell_data(room_cell_id).room_cell_type_id = room_cell_type_id
+end
 function M.get_room(room_cell_id)
     return get_room_cell_data(room_cell_id).room_id
 end
