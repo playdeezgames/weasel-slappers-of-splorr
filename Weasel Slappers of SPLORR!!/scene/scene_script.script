@@ -49,7 +49,7 @@ local function update_interactor()
 	local avatar_character_id = avatar.get_character()
 	local interaction = character.get_interaction(avatar_character_id)
 	if interaction == nil then
-		label.set_text(grimoire.URL_INTERACTOR_TEXT, "")
+		label.set_text(grimoire.URL_INTERACTOR_TEXT, "Up/Right/Left/Down: Move")
 	else
 		local dialog = avatar.get_dialog()
 		assert(dialog ~= nil, "dialog should not be nil")
@@ -68,6 +68,7 @@ local function update_interactor()
 			end
 			text = text .. "\n"
 		end
+		text = text .. "\n\nUp/Down: Change Choice\nSpace: Make Choice"
 		label.set_text(grimoire.URL_INTERACTOR_TEXT, text)
 	end
 end
