@@ -75,7 +75,7 @@ end
 function M.set_interaction(character_id, interaction_type_id, context)
     assert(type(character_id)=="number", "character_id must be a number.")
     assert(type(interaction_type_id)=="string" or type(interaction_type_id)=="nil", "interaction_type_id must be a string or nil.")
-    assert(type(context)=="table" or type(context)=="nil", "context must be a string or nil.")
+    assert(type(context)=="table" or type(context)=="nil", "context must be a table or nil.")
     local character_data = get_character_data(character_id)
     if interaction_type_id == nil then
         character_data.interaction = nil
