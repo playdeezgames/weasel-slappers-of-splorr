@@ -10,9 +10,9 @@ interaction_type.set_dialog_generator(
         room_cell.set_character(room_cell_id, nil)
         character.recycle(character_id)
         return {
-            lines = {"You killed it!"},
+            lines = {"You slapped it out of existence!"},
             choices = {
-                {text="OK", interaction = {}}
+                {text="Slay!", interaction = {}}
             },
             cancel = {}
         }

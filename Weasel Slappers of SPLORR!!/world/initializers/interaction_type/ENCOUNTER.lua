@@ -4,10 +4,10 @@ interaction_type.set_dialog_generator(
     interaction_type.ENCOUNTER,
     function(context)
         return {
-            lines = {"Yer in an encounter."},
+            lines = {"Do you slap the weasel?"},
             choices = {
-                {text="ATTACK!", interaction = {interaction_type_id=interaction_type.ATTACK, context = context}},
-                {text="RUN!", interaction = {}}
+                {text="SLAPPIT!", interaction = {interaction_type_id=interaction_type.ATTACK, context = context}},
+                {text="Don't slap.", interaction = {}}
             },
             cancel = {}
         }
