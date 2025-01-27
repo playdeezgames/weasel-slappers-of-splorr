@@ -46,7 +46,6 @@ local function update_board()
 end
 
 local function update_interactor()
-	local avatar_character_id = avatar.get_character()
 	local interaction = avatar.get_interaction()
 	if interaction == nil then
 		label.set_text(grimoire.URL_INTERACTOR_TEXT, "Up/Right/Left/Down: Move")
@@ -88,6 +87,12 @@ local function move_avatar(direction_id)
 	end
 end
 
+local function open_game_menu()
+	if not avatar.has_interaction() then
+		avatar.set_interaction(interaction_type.GAME_MENU, {})
+	end
+end
+
 function on_input(self, action_id, action)
 	if action.pressed or action.repeated then
 		if action_id == hash(grimoire.ACTION_UP) then
@@ -104,6 +109,7 @@ function on_input(self, action_id, action)
 			avatar.confirm_dialog_choice()
 		elseif action_id == hash(grimoire.ACTION_RED) then
 			avatar.cancel_dialog_choice()
+			open_game_menu()
 		else
 			print(action_id)
 		end
